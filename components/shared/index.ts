@@ -1,3 +1,5 @@
+export { ProductsGroupList } from './prosucts-group-list';
+export { ProductsCard } from './products-card';
 export { CheckboxFiltersGroup } from './checkbox-filters-group';
 export { FilterCheckbox } from './filter-checkbox';
 export { Filters } from './filters';

@@ -2,6 +2,8 @@ import {
   Categories,
   Container,
   Filters,
+  ProductsCard,
+  ProductsGroupList,
   SortPopup,
   Title,
   TopBar,
@@ -16,7 +18,7 @@ export default function Home() {
       <TopBar />
 
       <Container className="pb-14 mt-10">
-        <div className="flex gap-[60px]">
+        <div className="flex gap-[80px]">
           {/*Filtration*/}
           <div className="w-[250px]">
             <Filters />
@@ -25,7 +27,66 @@ export default function Home() {
           {/*Product's list */}
           <div className="flex-1">
             <div className="flex flex-col gap-16">
-              Список товаров
+              <ProductsGroupList
+                title="Пиццы"
+                categoryId={1}
+                items={[
+                  {
+                    id: 1,
+                    name: "Чизбургер-птцца",
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif",
+                    price: 550,
+                    items: [{ price: 550 }],
+                  },
+                  {
+                    id: 1,
+                    name: "Чизбургер-dsg",
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif",
+                    price: 50,
+                    items: [{ price: 550 }],
+                  },
+                  {
+                    id: 1,
+                    name: "Чизбургер-gews",
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif",
+                    price: 550,
+                    items: [{ price: 950 }],
+                  },
+                ]}
+              />
+              <ProductsGroupList
+                title="Комбо"
+                categoryId={1}
+                items={[
+                  {
+                    id: 1,
+                    name: "Чизбургер-птцца",
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif",
+                    price: 550,
+                    items: [{ price: 550 }],
+                  },
+                  {
+                    id: 1,
+                    name: "Чизбургер-dsg",
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif",
+                    price: 50,
+                    items: [{ price: 550 }],
+                  },
+                  {
+                    id: 1,
+                    name: "Чизбургер-gews",
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif",
+                    price: 550,
+                    items: [{ price: 950 }],
+                  },
+                ]}
+              />
             </div>
           </div>
         </div>
