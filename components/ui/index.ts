@@ -1,3 +1,4 @@
+export { RangeSlider } from "./range-skider";
 export { Button } from "./button";
 export { Checkbox } from "./checkbox";
 export { Dialog } from "./dialog";

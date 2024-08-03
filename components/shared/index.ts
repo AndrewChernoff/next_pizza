@@ -1,3 +1,4 @@
+export { CheckboxFiltersGroup } from './checkbox-filters-group';
 export { FilterCheckbox } from './filter-checkbox';
 export { Filters } from './filters';
 export { TopBar } from './top-bar';
