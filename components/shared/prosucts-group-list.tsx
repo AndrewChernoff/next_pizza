@@ -5,6 +5,7 @@ import { ProductsCard } from "./products-card";
 import { Title } from "./title";
 import { useEffect, useRef } from "react";
 import { useIntersection } from 'react-use';
+import { useCategoryStore } from '@/store/category'
 
 
 type PropsType = {
@@ -24,6 +25,8 @@ export const ProductsGroupList = ({
     className,
   }: PropsType) => {
 
+    const setCategoryId = useCategoryStore(state => state.setCategoryId)
+
     const intersectionRef = useRef(null);
     const intersection = useIntersection(intersectionRef, {
         threshold: 0.4
@@ -31,8 +34,9 @@ export const ProductsGroupList = ({
 
     useEffect(() => {
       if(intersection?.isIntersecting) {
-        console.log(title, categoryId);
+        console.log(categoryId);
         
+        setCategoryId(categoryId)/// have to get an id
       }
     }, [categoryId, intersection?.isIntersecting, title])
     
@@ -45,7 +49,7 @@ export const ProductsGroupList = ({
         <div className={cn('grid grid-cols-3 gap-[50px]', listClassName)}>
         {items.map((product, i) => (
           <ProductsCard
-            key={product.id}
+            key={`${product.id} ${product.name}`}
             id={product.id}
             name={product.name}
             imageUrl={product.imageUrl}

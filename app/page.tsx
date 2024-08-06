@@ -59,7 +59,7 @@ export default function Home() {
               />
               <ProductsGroupList
                 title="Комбо"
-                categoryId={1}
+                categoryId={2}
                 items={[
                   {
                     id: 1,
@@ -79,6 +79,36 @@ export default function Home() {
                   },
                   {
                     id: 1,
+                    name: "Чизбургер-gews",
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif",
+                    price: 550,
+                    items: [{ price: 950 }],
+                  },
+                ]}
+              />
+              <ProductsGroupList
+                title="Закуски"
+                categoryId={3}
+                items={[
+                  {
+                    id: 1,
+                    name: "Чизбургер-птцца",
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif",
+                    price: 550,
+                    items: [{ price: 550 }],
+                  },
+                  {
+                    id: 1,
+                    name: "Чизбургер-dsg",
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif",
+                    price: 50,
+                    items: [{ price: 550 }],
+                  },
+                  {
+                    id: 3,
                     name: "Чизбургер-gews",
                     imageUrl:
                       "https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif",

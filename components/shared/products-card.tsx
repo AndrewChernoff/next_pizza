@@ -18,6 +18,7 @@ export const ProductsCard = ({
   name,
   price,
 }: PropsType) => {
+  
   return (
     <div className={className}>
       <Link href={`/product/${id}`}>
