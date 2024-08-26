@@ -23,9 +23,16 @@ export const SearchInput = ({ className }: PropsType) => {
     setFocused(false);
   });
 
-  useDebounce(() => {
-    Api.products.search(searchQuery)
-        .then(items => setProducts(items))
+  useDebounce(
+    async() => {
+      try {
+        Api.products.search(searchQuery)
+        .then(items => setProducts(items))    
+      } catch (error) {
+        console.log(error);
+        
+      }
+    
   }, 500, [searchQuery])
 
   const onClickItem = () => {
@@ -84,3 +91,4 @@ export const SearchInput = ({ className }: PropsType) => {
     </>
   );
 };
+

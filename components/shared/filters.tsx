@@ -1,3 +1,5 @@
+'use client'
+import { useFilterIngredients } from "@/hooks/useFilterIngredients";
 import { Input, RangeSlider } from "../ui";
 import { CheckboxFiltersGroup } from "./checkbox-filters-group";
 import { FilterCheckbox } from "./filter-checkbox";
@@ -8,6 +10,11 @@ type PropsType = {
 };
 
 export const Filters = ({ className }: PropsType) => {
+
+  const { ingredients, loading } = useFilterIngredients()
+
+  const items = ingredients.map(item => ({value: String(item.id), text: item.name}))
+
   return (
     <div className={className}>
       <Title text="Фильтрация" size="sm" className="mb-5 font-bold" />
@@ -34,10 +41,9 @@ export const Filters = ({ className }: PropsType) => {
       </div>
 
       <CheckboxFiltersGroup title='Ингредиенты' className="mt-5" limit={6} 
-      items={[{text: 'Сыр', value: '1'}, {text:'Салями', value: '2'}, {text:'Салями', value: '2'}, 
-        {text:'Салями', value: '2'}, {text:'Салями', value: '2'}, {text:'Салями', value: '2'}, {text:'Салями', value: '2'}, {text:'Салями', value: '2'}, {text:'Салями', value: '2'}, {text:'Салями', value: '2'}, {text:'Салями', value: '2'}, ]}
-      defaultItems={[{text: 'Сыр', value: '1'}, {text:'Салями', value: '2'}, {text:'Салями', value: '2'}, 
-        {text:'Салями', value: '2'}, {text:'Салями', value: '2'}, {text:'Салями', value: '2'}, {text:'Салями', value: '2'}, {text:'Салями', value: '2'}, {text:'Салями', value: '2'}, {text:'Салями', value: '2'}, {text:'Салями', value: '2'},]}
+      items={items}
+      defaultItems={items.slice(0, 6)}
+      loading={loading}
       />
     </div>
   );
