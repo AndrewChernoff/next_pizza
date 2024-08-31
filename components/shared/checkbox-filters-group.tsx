@@ -9,13 +9,16 @@ type Item = FilterChecboxProps;
 type PropsType = {
   title: string;
   items: Item[];
-  defaultItems: Item[];
+  defaultItems?: Item[];
   limit?: number;
   searchInputPlaceholder?: string;
-  onChange?: (value: string) => void;
+  onChange?: (value: never/* string */) => void;
   defaultValue?: string[];
   className?: string;
   loading?: boolean;
+  onAddId?: (id: never) => void
+  selected?: Set<string>
+  name?: string
 };
 
 export const CheckboxFiltersGroup = ({
@@ -27,6 +30,9 @@ export const CheckboxFiltersGroup = ({
   defaultValue,
   className,
   loading,
+  onAddId,
+  selected,
+  name
 }: PropsType) => {
   const [showAll, setShowAll] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -50,7 +56,7 @@ export const CheckboxFiltersGroup = ({
     ? items.filter((el) =>
         el.text.toLocaleLowerCase().includes(searchValue.toLowerCase())
       )
-    : defaultItems.slice(0, limit);
+    : (defaultItems || items).slice(0, limit);
 
   const onChangeSearchValue = (e: ChangeEvent<HTMLInputElement>) =>
     setSearchValue(e.currentTarget.value);
@@ -76,9 +82,9 @@ export const CheckboxFiltersGroup = ({
             text={item.text}
             value={item.value}
             endAdornment={item.endAdornment}
-            checked={false}
-            onCheckedChange={() => console.log(item.value)}
-            name={item.name}
+            checked={selected?.has(item.value)}
+            onCheckedChange={() => onAddId?.(item.value as never)}
+            name={name}
           />
         ))}
       </div>
@@ -96,3 +102,4 @@ export const CheckboxFiltersGroup = ({
     </div>
   );
 };
+//6 14
