@@ -157,5 +157,3 @@ export const Filters = ({ className }: PropsType) => {
     </div>
   );
 };
-
-///7 01
