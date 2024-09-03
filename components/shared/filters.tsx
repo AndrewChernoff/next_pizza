@@ -1,13 +1,14 @@
 "use client";
-import { useFilterIngredients } from "@/hooks/useFilterIngredients";
+import { useFilterIngredients } from "@/hooks/use-filter-ingredients";
 import { Input, RangeSlider } from "../ui";
 import { CheckboxFiltersGroup } from "./checkbox-filters-group";
-import { FilterCheckbox } from "./filter-checkbox";
 import { Title } from "./title";
 import { useEffect, useState } from "react";
 import { useSet } from "react-use";
 import qs from "qs";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useQueryParamsFilters } from "@/hooks/use-query-params-filters";
+import { useFilters } from "@/hooks/use-filters";
 
 interface PropsType {
   className?: string;
@@ -20,24 +21,32 @@ interface PriceProps {
 
 export const Filters = ({ className }: PropsType) => {
   
-  const router = useRouter()
+ /*  const router = useRouter()
+
+  const searchParams = useSearchParams() */
 
   const searchParams = useSearchParams()
-
-  //@ts-ignore
-  const [sizes, { toggle: toggleSizes }] = useSet(searchParams.get('sizes')  ? new Set(searchParams.get('sizes').split(',')) : new Set([]));  //searchParams.get('sizes')?.split(',')
-  //@ts-ignore
-  const [pizzaTypes, { toggle: toggleTypes }] = useSet(searchParams.get('pizzaTypes')  ? new Set(searchParams.get('pizzaTypes').split(',')) : new Set([]));
-
+  
   const { ingredients, loading, selectedIngredientsIds, onAddId } =
     useFilterIngredients(searchParams.get('ingredients') ? searchParams.get('ingredients')?.split(',') : []);
 
+
+  /* const [sizes, { toggle: toggleSizes }] = useSet(searchParams.get('sizes')  ? new Set(searchParams.get('sizes')?.split(',')) : new Set([]));  //searchParams.get('sizes')?.split(',')
+  
+  const [pizzaTypes, { toggle: toggleTypes }] = useSet(searchParams.get('pizzaTypes')  ? new Set(searchParams.get('pizzaTypes')?.split(',')) : new Set([]));
+
+  
   const [price, setPrice] = useState<PriceProps>({
     priceFrom: Number(searchParams.get('priceFrom')) || 0,
     priceTo: Number(searchParams.get('priceTo')) || 1000,
-  });
+  }); */
 
-  useEffect(() => {
+  const {sizes, pizzaTypes, toggleSizes, toggleTypes, price, setPrice} = useFilters()
+
+   useQueryParamsFilters({price, pizzaTypes, sizes, selectedIngredientsIds})
+
+
+  /* useEffect(() => {
 
     const filters = {
       ...price,
@@ -55,7 +64,7 @@ export const Filters = ({ className }: PropsType) => {
       scroll: false
     });
 
-  }, [pizzaTypes, price, router, selectedIngredientsIds, sizes])
+  }, [pizzaTypes, price, router, selectedIngredientsIds, sizes]) */
   
 
   const items = ingredients.map((item) => ({
@@ -149,3 +158,4 @@ export const Filters = ({ className }: PropsType) => {
   );
 };
 
+///7 01
