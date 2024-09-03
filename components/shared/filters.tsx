@@ -1,5 +1,5 @@
 "use client";
-import { useFilterIngredients } from "@/hooks/use-filter-ingredients";
+import { useIngredients } from "@/hooks/use-filter-ingredients";
 import { Input, RangeSlider } from "../ui";
 import { CheckboxFiltersGroup } from "./checkbox-filters-group";
 import { Title } from "./title";
@@ -28,7 +28,7 @@ export const Filters = ({ className }: PropsType) => {
   const searchParams = useSearchParams()
   
   const { ingredients, loading, selectedIngredientsIds, onAddId } =
-    useFilterIngredients(searchParams.get('ingredients') ? searchParams.get('ingredients')?.split(',') : []);
+    useIngredients(searchParams.get('ingredients') ? searchParams.get('ingredients')?.split(',') : []);
 
 
   /* const [sizes, { toggle: toggleSizes }] = useSet(searchParams.get('sizes')  ? new Set(searchParams.get('sizes')?.split(',')) : new Set([]));  //searchParams.get('sizes')?.split(',')

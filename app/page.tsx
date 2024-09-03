@@ -1,21 +1,31 @@
 import {
-  Categories,
   Container,
   Filters,
-  ProductsCard,
   ProductsGroupList,
-  SortPopup,
   Title,
   TopBar,
 } from "@/components/shared";
+import { prisma } from "@/prisma/prisma-client";
 
-export default function Home() {
+export default async function Home() {
+  const categories = await prisma.category.findMany({
+    include: {
+      products: {
+        include: {
+          ingredients: true,
+          items: true,
+        },
+      },
+    },
+  });
+
+
   return (
     <>
       <Container className="mt-5">
         <Title text="Все пиццы" size="lg" className="font-extrabold" />
       </Container>
-      <TopBar />
+      <TopBar categories={categories.filter((category) => category.products.length > 0)} />
 
       <Container className="pb-14 mt-10">
         <div className="flex gap-[80px]">
@@ -27,96 +37,17 @@ export default function Home() {
           {/*Product's list */}
           <div className="flex-1">
             <div className="flex flex-col gap-16">
-              <ProductsGroupList
-                title="Пиццы"
-                categoryId={1}
-                items={[
-                  {
-                    id: 1,
-                    name: "Чизбургер-птцца",
-                    imageUrl:
-                      "https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif",
-                    price: 550,
-                    items: [{ price: 550 }],
-                  },
-                  {
-                    id: 1,
-                    name: "Чизбургер-dsg",
-                    imageUrl:
-                      "https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif",
-                    price: 50,
-                    items: [{ price: 550 }],
-                  },
-                  {
-                    id: 1,
-                    name: "Чизбургер-gews",
-                    imageUrl:
-                      "https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif",
-                    price: 550,
-                    items: [{ price: 950 }],
-                  },
-                ]}
-              />
-              <ProductsGroupList
-                title="Комбо"
-                categoryId={2}
-                items={[
-                  {
-                    id: 1,
-                    name: "Чизбургер-птцца",
-                    imageUrl:
-                      "https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif",
-                    price: 550,
-                    items: [{ price: 550 }],
-                  },
-                  {
-                    id: 1,
-                    name: "Чизбургер-dsg",
-                    imageUrl:
-                      "https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif",
-                    price: 50,
-                    items: [{ price: 550 }],
-                  },
-                  {
-                    id: 1,
-                    name: "Чизбургер-gews",
-                    imageUrl:
-                      "https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif",
-                    price: 550,
-                    items: [{ price: 950 }],
-                  },
-                ]}
-              />
-              <ProductsGroupList
-                title="Закуски"
-                categoryId={3}
-                items={[
-                  {
-                    id: 1,
-                    name: "Чизбургер-птцца",
-                    imageUrl:
-                      "https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif",
-                    price: 550,
-                    items: [{ price: 550 }],
-                  },
-                  {
-                    id: 1,
-                    name: "Чизбургер-dsg",
-                    imageUrl:
-                      "https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif",
-                    price: 50,
-                    items: [{ price: 550 }],
-                  },
-                  {
-                    id: 3,
-                    name: "Чизбургер-gews",
-                    imageUrl:
-                      "https://media.dodostatic.net/image/r:292x292/11EE7D61BB2BD856BD5DFD71FB7D4210.avif",
-                    price: 550,
-                    items: [{ price: 950 }],
-                  },
-                ]}
-              />
+              {categories.map(
+                (el) =>
+                  el.products.length > 0 && (
+                    <ProductsGroupList
+                      key={el.id}
+                      title={el.name}
+                      categoryId={el.id}
+                      items={el.products}
+                    />
+                  )
+              )}
             </div>
           </div>
         </div>

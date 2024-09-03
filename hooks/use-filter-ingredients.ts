@@ -11,7 +11,7 @@ type ReturnProps = {
     onAddId: (id: never) => void
 };
 
-export const useFilterIngredients = (values: string[] = []): ReturnProps => {
+export const useIngredients = (values: string[] = []): ReturnProps => {
   
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [loading, setLoading] = useState(true);
@@ -31,7 +31,6 @@ export const useFilterIngredients = (values: string[] = []): ReturnProps => {
         }
       }
   
-      //fetchIngredients();
       fetchIngredients();
 
   }, []);
