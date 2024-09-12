@@ -3,9 +3,10 @@
 import { cn } from "@/shared/lib/utils";
 import { ProductsCard } from "./products-card";
 import { Title } from "./title";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useIntersection } from 'react-use';
 import { useCategoryStore } from '@/store/category'
+import { ChooseProductModal } from "./modals";
 
 
 type PropsType = {
@@ -24,6 +25,7 @@ export const ProductsGroupList = ({
     categoryId,
     className,
   }: PropsType) => {
+    const [productId, setProductId] = useState<string | null>(null)
 
     const setCategoryId = useCategoryStore(state => state.setCategoryId)
 
@@ -41,14 +43,22 @@ export const ProductsGroupList = ({
     }, [categoryId, intersection?.isIntersecting, title])
     
 
+  const selectProduct = (id: string) => {//m
+    setProductId(id)
+  }
+console.log('productId');
 
   return (
+    <>
+    { productId && <ChooseProductModal onClose={() => setProductId(null)} id={productId}/>}
     <div className={className} id={title} ref={intersectionRef}>
+      
         <Title text={title} size={"lg"} className="font-extrabold mb-5"/>
 
         <div className={cn('grid grid-cols-3 gap-[50px]', listClassName)}>
         {items.map((product, i) => (
           <ProductsCard
+            callBack={() => selectProduct(product.id)}
             key={`${product.id} ${product.name}`}
             id={product.id}
             name={product.name}
@@ -58,5 +68,6 @@ export const ProductsGroupList = ({
         ))}
       </div>
     </div>
+    </>
   )
 }

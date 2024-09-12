@@ -9,6 +9,7 @@ type PropsType = {
   price: number;
   imageUrl: string;
   className?: string;
+  callBack: () => void //m
 };
 
 export const ProductsCard = ({
@@ -17,11 +18,12 @@ export const ProductsCard = ({
   imageUrl,
   name,
   price,
+  callBack
 }: PropsType) => {
   
   return (
-    <div className={className}>
-      <Link href={`/product/${id}`}>
+    <div className={className} onClick={callBack}>
+      {/* <Link href={`/product/${id}`}> */}
         <div className="flex justify-center p-6 bg-secondary rounded-lg h-[260px]">
           <img className="w-[215px] h-[215px]" src={imageUrl} alt={name} />
         </div>
@@ -42,7 +44,7 @@ export const ProductsCard = ({
             Добавить
           </Button>
         </div>
-      </Link>
+      {/* </Link> */}
     </div>
   );
 };

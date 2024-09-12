@@ -13,8 +13,8 @@ export const metadata: Metadata = {
   title: "Next Pizza | Главная",
 };
 
-export default function RootLayout({
-  children,
+export default function HomeLayout({
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
@@ -24,7 +24,6 @@ export default function RootLayout({
         <main className="min-h-screen">
         <Header />
           {children}
-       
         </main>
       </body>
     </html>

@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 type PropsType = {
   className?: string;
   imgUrl: string;
-  size?: number;
+  size: 20 | 30 | 40;
 };
 
 export const ProductImage = ({ className, imgUrl, size }: PropsType) => {

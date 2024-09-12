@@ -8,7 +8,7 @@ const nunito = Nunito({
   weight: ["400", "500", "600", "700", "800", "900"],
 });
 
-export default function HomeLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
