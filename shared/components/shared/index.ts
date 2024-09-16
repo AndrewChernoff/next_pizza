@@ -1,5 +1,5 @@
 export { SearchInput } from './search-input';
-export { ProductsGroupList } from './prosucts-group-list';
+export { ProductsGroupList } from './products-group-list';
 export { ProductsCard } from './products-card';
 export { CheckboxFiltersGroup } from './checkbox-filters-group';
 export { FilterCheckbox } from './filter-checkbox';

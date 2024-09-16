@@ -15,6 +15,8 @@ import {
 import { useEffect, useState } from "react";
 import { IngredientItem } from "./ingredient";
 import { useSet } from "react-use";
+import { useTotalPizzaPrice } from "@/shared/hooks/use-total-pizza-price";
+import { useFilterAvaliablePizzas } from "@/shared/hooks/use-filter-avaliable-pizzas";
 
 type PropsType = {
   imageUrl?: string;
@@ -32,50 +34,23 @@ export const ChoosePPizzaForm = ({
   ingredients,
   className,
 }: PropsType) => {
+
   const [selectedIngredients, { toggle: addIngredient }] = useSet(
     new Set<number>([])
   );
 
-  const [size, setSize] = useState<PizzaSize>(20);
-  const [type, setType] = useState<PizzaType>(1);
+  const {avaliableSizes, setType, setSize, size, type} = useFilterAvaliablePizzas(items)
 
   const textDetaills = `${mapPizzaSize[size]} (${size} см), традиционное тесто ${mapPizzaType[type]}`;
 
+
+  const {totalPrice} = useTotalPizzaPrice({items, ingredients, type, size, selectedIngredients})
+
   const onClickAdd = (value: number) => addIngredient(value);
 
-  const pizzaPrice = items.filter(
-    (el) => el.pizzaType === type && el.size === size
-  )[0]?.price || items[0].price
-  const ingredientsPrice = ingredients
-    .filter((el) => selectedIngredients.has(el.id))
-    .reduce((sum, el) => sum + el.price, 0);
-
-  const totalPrice = pizzaPrice + ingredientsPrice;
-
   const handleClickAdd = () => {
-    console.log({ size, type, ingredients });
+    console.log({ size, type, ingredients, totalPrice });
   };
-  
-  const avaliablePizzas = items.filter(el => el.pizzaType === type)
-
-  const avaliableSizes = pizzaSizes.map(el => ({
-    name: el.name,
-    value: el.value,
-    disabled: !avaliablePizzas.some(item => item.size === +el.value)
-  }))
-
-  useEffect(()=> {
-    
-  const isDisabledSize = avaliablePizzas[0].size === size
-  
-    if(isDisabledSize) {
-      setSize(Number(pizzaSizes[0].value) as PizzaSize)
-    } else {
-      setSize(Number(avaliablePizzas[0].size) as PizzaSize)
-    }
-  
-  }, [type])
-  
 
   return (
     <div className={cn(className, "flex flex-1")}>

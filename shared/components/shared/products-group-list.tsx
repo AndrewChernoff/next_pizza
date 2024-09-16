@@ -46,7 +46,6 @@ export const ProductsGroupList = ({
   const selectProduct = (id: string) => {//m
     setProductId(id)
   }
-console.log('productId');
 
   return (
     <>
