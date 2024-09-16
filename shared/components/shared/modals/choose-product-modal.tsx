@@ -1,29 +1,13 @@
 "use client";
 
-import { Dialog } from "@/components/ui";
-import { DialogContent } from "@/components/ui/dialog";
-import { Product } from "@prisma/client";
-import { Title } from "../title";
-import { cn } from "@/lib/utils";
+import { Dialog } from "@/shared/components/ui";
+import { DialogContent } from "@/shared/components/ui/dialog";
 import { useEffect, useState } from "react";
-import { prisma } from "@/prisma/prisma-client";
-import { Api } from "@/services/api-client";
+import { Api } from "@/shared/services/api-client";
 import { ChooseProductForm } from "../choose-product-form";
 import { ProductWithRelations } from "@/@types/prisma";
-
-const getProduct = async (id: string) => {
-  const product = await prisma.product.findFirst({
-    where: {
-      id: +id,
-    },
-    include: {
-      ingredients: true,
-      items: true,
-    },
-  });
-
-  return product;
-};
+import { ChoosePPizzaForm } from "../choose-pizza-form";
+import { cn } from "@/shared/lib/utils";
 
 type PropsType = {
   id: string;
@@ -32,9 +16,10 @@ type PropsType = {
 };
 
 export const ChooseProductModal = ({ id, onClose, className }: PropsType) => {
+  //need to remake it so component gets product
   const [product, setProduct] = useState<ProductWithRelations | null>(null);
 
-  const isPizzaForm = Boolean(product?.items[0].pizzaType)
+  const isPizzaForm = Boolean(product?.items[0].pizzaType);
 
   useEffect(() => {
     Api.products
@@ -42,7 +27,6 @@ export const ChooseProductModal = ({ id, onClose, className }: PropsType) => {
       .then((res) => setProduct(res))
       .catch((err) => console.log(err));
   }, [id]);
-
 
   return (
     <Dialog open={Boolean(id)} onOpenChange={onClose}>
@@ -52,15 +36,16 @@ export const ChooseProductModal = ({ id, onClose, className }: PropsType) => {
           className
         )}
       >
-        { isPizzaForm ? 
-        'Pizza Form'  
-          :
-            product && <ChooseProductForm
+        {isPizzaForm && product ? (
+          <ChoosePPizzaForm items={product.items} imageUrl={product.imageUrl} name={product.name} ingredients={product?.ingredients} />
+        ) : (
+          product && (
+            <ChooseProductForm
               imageUrl={product?.imageUrl}
               name={product?.name}
             />
-          
-        }
+          )
+        )}
       </DialogContent>
     </Dialog>
   );

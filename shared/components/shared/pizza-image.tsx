@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 type PropsType = {
   className?: string;
@@ -6,7 +6,7 @@ type PropsType = {
   size: 20 | 30 | 40;
 };
 
-export const ProductImage = ({ className, imgUrl, size }: PropsType) => {
+export const PizzaImageImage = ({ className, imgUrl, size }: PropsType) => {
   return (
     <div className={cn('flex items-center justify-center flex-1 relative w-full', className)}>
     <img

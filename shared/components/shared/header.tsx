@@ -1,10 +1,10 @@
-import { cn } from "@/lib/utils";
 import { Container } from "./container";
 import Image from "next/image";
-import { Button } from "@/components/ui";
+import { Button } from "@/shared/components/ui";
 import { MoveRight, ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
 import { SearchInput } from "./search-input";
+import { cn } from "@/shared/lib/utils";
 
 type PropsType = {
   className?: string;

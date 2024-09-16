@@ -1,8 +1,7 @@
 import { Ingredient, ProductItem } from "@prisma/client";
-import { ProductImage } from "./product-image";
 import { Title } from "./title";
 import { Button } from "../ui";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 type PropsType = {
   imageUrl: string;
@@ -33,16 +32,6 @@ export const ChooseProductForm = ({
         />
       </div>
 
-      {/* <div className="w-[490px] bg-[#f7f6f5 p-7">
-        <Title text={name} size="md" className="font-extrabold mb-1" />
-
-        <p className="text-gray-400">{textDetaills}</p>
-
-        <Button className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10">
-          Добавить в корзину за {totalPrice} ₽
-        </Button>
-      </div>
-    </div> */}
       <div className="w-[490px] bg-[#f7f6f5] p-7">
         <Title text={name} size="md" className="font-extrabold mb-1" />
         <p className="text-gray-400">{textDetaills}</p>

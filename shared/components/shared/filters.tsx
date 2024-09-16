@@ -1,5 +1,5 @@
 "use client";
-import { useIngredients } from "@/hooks/use-filter-ingredients";
+import { useIngredients } from "@/shared/hooks/use-filter-ingredients";
 import { Input, RangeSlider } from "../ui";
 import { CheckboxFiltersGroup } from "./checkbox-filters-group";
 import { Title } from "./title";
@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 import { useSet } from "react-use";
 import qs from "qs";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useQueryParamsFilters } from "@/hooks/use-query-params-filters";
-import { useFilters } from "@/hooks/use-filters";
+import { useQueryParamsFilters } from "@/shared/hooks/use-query-params-filters";
+import { useFilters } from "@/shared/hooks/use-filters";
 
 interface PropsType {
   className?: string;

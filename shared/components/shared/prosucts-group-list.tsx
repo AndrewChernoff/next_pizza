@@ -5,7 +5,7 @@ import { ProductsCard } from "./products-card";
 import { Title } from "./title";
 import { useEffect, useRef, useState } from "react";
 import { useIntersection } from 'react-use';
-import { useCategoryStore } from '@/store/category'
+import { useCategoryStore } from '@/shared/store/category'
 import { ChooseProductModal } from "./modals";
 
 
