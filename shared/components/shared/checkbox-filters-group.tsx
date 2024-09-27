@@ -102,4 +102,3 @@ export const CheckboxFiltersGroup = ({
     </div>
   );
 };
-//6 14
