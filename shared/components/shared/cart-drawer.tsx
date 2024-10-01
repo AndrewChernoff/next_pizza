@@ -1,6 +1,6 @@
 "use client";
 
-import type { PropsWithChildren } from "react";
+import { useEffect, type PropsWithChildren } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import {
@@ -14,6 +14,9 @@ import {
 import { Button } from "../ui";
 import { CartDrawerItem } from "./cart-drawer-item";
 import { getCartItemDetailes } from "@/shared/lib";
+import { useCartStore } from "@/shared/store/cart";
+import { PizzaSize, PizzaType } from "@/shared/constants/pizza";
+import { CartStateItem } from "@/shared/lib/get-cart-details";
 
 type PropsType = {
   className?: string;
@@ -23,128 +26,55 @@ export const CartDrawer = ({
   children,
   className,
 }: PropsWithChildren<PropsType>) => {
+  const [fetchCartItems, updateItemQuantity, removeCartItem, totalAmount, items] = useCartStore((state) => [
+    state.fetchCartItems,
+    state.updateItemQuantity,
+    state.removeCartItem,
+    state.totalAmount,
+    state.items,
+  ]);
+
+  useEffect(() => {
+    fetchCartItems();
+  }, []);
+
+  const changeQuantity = (id: number, quantity: number) => {
+    updateItemQuantity(id, quantity)
+  }
+  const removeCartItemHandler = (id: number) => {
+    removeCartItem(id)
+  }
+  
   return (
     <Sheet>
       <SheetTrigger>{children}</SheetTrigger>
       <SheetContent className="flex flex-col justify-between pb-0 bg-[#F4F1EE]">
         <SheetHeader>
           <SheetTitle>
-            В корзине <span className="font-bold">3 товара</span>
+            В корзине <span className="font-bold">{items.length} товара</span>
           </SheetTitle>
         </SheetHeader>
 
         <div className="-mx-6 mt-5 overflow-auto flex-1">
           <div className="mb-2">
-            <CartDrawerItem
-              imgUrl={""}
-              id={1}
-              imageUrl={
-                "https://media.dodostatic.net/image/r:292x292/11EE7970321044479C1D1085457A36EB.webp"
-              }
-              details={getCartItemDetailes(2, 30, [
-                { name: "Cheese" },
-                { name: "Ham" },
-              ])}
-              name={"Pizza"}
-              price={500}
-              quantity={1}
-            />
-          </div>
-          <div className="mb-2">
-            <CartDrawerItem
-              imgUrl={""}
-              id={1}
-              imageUrl={
-                "https://media.dodostatic.net/image/r:292x292/11EE7970321044479C1D1085457A36EB.webp"
-              }
-              details={getCartItemDetailes(2, 30, [
-                { name: "Cheese" },
-                { name: "Ham" },
-              ])}
-              name={"Pizza"}
-              price={500}
-              quantity={1}
-            />
-          </div>
-          <div className="mb-2">
-            <CartDrawerItem
-              imgUrl={""}
-              id={1}
-              imageUrl={
-                "https://media.dodostatic.net/image/r:292x292/11EE7970321044479C1D1085457A36EB.webp"
-              }
-              details={getCartItemDetailes(2, 30, [
-                { name: "Cheese" },
-                { name: "Ham" },
-              ])}
-              name={"Pizza"}
-              price={500}
-              quantity={1}
-            />
-          </div>
-          <div className="mb-2">
-            <CartDrawerItem
-              imgUrl={""}
-              id={1}
-              imageUrl={
-                "https://media.dodostatic.net/image/r:292x292/11EE7970321044479C1D1085457A36EB.webp"
-              }
-              details={getCartItemDetailes(2, 30, [
-                { name: "Cheese" },
-                { name: "Ham" },
-              ])}
-              name={"Pizza"}
-              price={500}
-              quantity={1}
-            />
-          </div>
-          <div className="mb-2">
-            <CartDrawerItem
-              imgUrl={""}
-              id={1}
-              imageUrl={
-                "https://media.dodostatic.net/image/r:292x292/11EE7970321044479C1D1085457A36EB.webp"
-              }
-              details={getCartItemDetailes(2, 30, [
-                { name: "Cheese" },
-                { name: "Ham" },
-              ])}
-              name={"Pizza"}
-              price={500}
-              quantity={1}
-            />
-          </div>
-          <div className="mb-2">
-            <CartDrawerItem
-              imgUrl={""}
-              id={1}
-              imageUrl={
-                "https://media.dodostatic.net/image/r:292x292/11EE7970321044479C1D1085457A36EB.webp"
-              }
-              details={getCartItemDetailes(2, 30, [
-                { name: "Cheese" },
-                { name: "Ham" },
-              ])}
-              name={"Pizza"}
-              price={500}
-              quantity={1}
-            />
-          </div>
-          <div className="mb-2">
-            <CartDrawerItem
-              imgUrl={""}
-              id={1}
-              imageUrl={
-                "https://media.dodostatic.net/image/r:292x292/11EE7970321044479C1D1085457A36EB.webp"
-              }
-              details={getCartItemDetailes(2, 30, [
-                { name: "Cheese" },
-                { name: "Ham" },
-              ])}
-              name={"Pizza"}
-              price={500}
-              quantity={1}
-            />
+            {items.map((item) => (
+              <CartDrawerItem
+                key={item.id}
+                id={item.id}
+                imageUrl={item.imageUrl}
+                details={
+                  (item.pizzaSize && item.pizzaType) ? getCartItemDetailes(
+                  item.pizzaType as PizzaType,
+                  item.pizzaSize as PizzaSize,
+                  item.ingredients as any
+                ): ''}
+                name={item.name}
+                price={item.price}
+                quantity={item.quantity}
+                onClick={changeQuantity}
+                removeItem={() => removeCartItemHandler(item.id)}
+              />
+            ))}
           </div>
         </div>
         <SheetFooter className="-mx-6 bg-white p-8">
@@ -155,7 +85,7 @@ export const CartDrawer = ({
                 <div className="flex-1 border-b border-dashed border-b-neutral-200 relative -top-1 mx-2" />
               </span>
 
-              <span className="font-bold text-lg">500 ₽</span>
+              <span className="font-bold text-lg">{totalAmount} ₽</span>
             </div>
 
             <Link href="/checkout">
