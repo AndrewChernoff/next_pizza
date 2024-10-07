@@ -53,11 +53,11 @@ export const ChoosePPizzaForm = ({
   const {totalPrice} = useTotalPizzaPrice({items, ingredients, type, size, selectedIngredients})
 
   const onClickAdd = (value: number) => addIngredient(value);
+  console.log(currentItemId);
 
-  const handleClickAdd = (productItemId: number) => {
-    console.log(currentItemId);
+  const handleClickAdd = (/* productItemId: number */) => {
     console.log({ size, type, ingredients, totalPrice });
-    onAddToCart({ingredients: Array.from(selectedIngredients), productItemId })
+    onAddToCart({ingredients: Array.from(selectedIngredients), productItemId: currentItemId as number })
   };
 
   return (
@@ -100,7 +100,7 @@ export const ChoosePPizzaForm = ({
         </div>
         <Button
           className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10"
-          onClick={() => handleClickAdd(productId)}
+          onClick={handleClickAdd}
         >
           Добавить в корзину за {totalPrice} ₽
         </Button>

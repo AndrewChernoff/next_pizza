@@ -47,7 +47,7 @@ export const CartDrawerItem = ({
 
         <div className="flex items-center justify-between">
           <CountButton
-            onClick={/* type => console.log(type) */ changeQuantity}
+            onClick={changeQuantity}
             value={quantity}
           />
 
