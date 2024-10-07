@@ -17,6 +17,7 @@ import { IngredientItem } from "./ingredient";
 import { useSet } from "react-use";
 import { useTotalPizzaPrice } from "@/shared/hooks/use-total-pizza-price";
 import { useFilterAvaliablePizzas } from "@/shared/hooks/use-filter-avaliable-pizzas";
+import { CreateCartItemValues } from "@/shared/services/dto/cart.dto";
 
 type PropsType = {
   imageUrl?: string;
@@ -24,7 +25,9 @@ type PropsType = {
   ingredients: Ingredient[];
   items: ProductItem[];
   onClickAdd?: () => void;
+  onAddToCart: (values: CreateCartItemValues) => void; ///
   className?: string;
+  productId: number
 };
 
 export const ChoosePPizzaForm = ({
@@ -33,13 +36,16 @@ export const ChoosePPizzaForm = ({
   imageUrl,
   ingredients,
   className,
+  onAddToCart,
+  productId
 }: PropsType) => {
+  
 
   const [selectedIngredients, { toggle: addIngredient }] = useSet(
     new Set<number>([])
   );
 
-  const {avaliableSizes, setType, setSize, size, type} = useFilterAvaliablePizzas(items)
+  const {avaliableSizes, setType, setSize, size, type, currentItemId} = useFilterAvaliablePizzas(items)
 
   const textDetaills = `${mapPizzaSize[size]} (${size} см), традиционное тесто ${mapPizzaType[type]}`;
 
@@ -48,8 +54,10 @@ export const ChoosePPizzaForm = ({
 
   const onClickAdd = (value: number) => addIngredient(value);
 
-  const handleClickAdd = () => {
+  const handleClickAdd = (productItemId: number) => {
+    console.log(currentItemId);
     console.log({ size, type, ingredients, totalPrice });
+    onAddToCart({ingredients: Array.from(selectedIngredients), productItemId })
   };
 
   return (
@@ -92,7 +100,7 @@ export const ChoosePPizzaForm = ({
         </div>
         <Button
           className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10"
-          onClick={handleClickAdd}
+          onClick={() => handleClickAdd(productId)}
         >
           Добавить в корзину за {totalPrice} ₽
         </Button>

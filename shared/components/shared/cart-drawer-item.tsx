@@ -8,8 +8,8 @@ import { Trash2Icon } from "lucide-react";
 interface PropsType extends CartItemProps {
   className?: string;
   imageUrl: string;
-  onClick: (id: number, quantity: number) => void///?
-  removeItem: () => void///?
+  onClick: (id: number, quantity: number) => void; ///?
+  removeItem: () => void; ///?
 }
 
 export const CartDrawerItem = ({
@@ -21,20 +21,21 @@ export const CartDrawerItem = ({
   details,
   className,
   onClick,
-  removeItem
+  removeItem,
 }: PropsType) => {
-
-  const changeQuantity = (type: 'plus' | 'minus') => {
-    console.log(type)
-    if(type ==='plus') {
-      const updatedQuantity = quantity + 1
-      onClick(id, updatedQuantity)
-    } else if (type ==='minus') {
-      const updatedQuantity = quantity - 1
-      onClick(id, updatedQuantity)
+  const changeQuantity = (type: "plus" | "minus") => {
+    console.log(type);
+    if (type === "plus") {
+      const updatedQuantity = quantity + 1;
+      onClick(id, updatedQuantity);
+    } else if (type === "minus") {
+      const updatedQuantity = quantity - 1;
+      onClick(id, updatedQuantity);
     }
-    
-  }
+  };
+
+  console.log(details);
+  
   return (
     <div className={cn("flex bg-white p-5 gap-6", className)}>
       <CartItem.Image src={imageUrl} />
@@ -42,15 +43,22 @@ export const CartDrawerItem = ({
       <div className="flex-1">
         <CartItem.Info name={name} details={details} />
 
-        <hr className="my-3"/>
+        <hr className="my-3" />
 
         <div className="flex items-center justify-between">
-            <CountButton onClick={ /* type => console.log(type) */changeQuantity} value={quantity}/>
+          <CountButton
+            onClick={/* type => console.log(type) */ changeQuantity}
+            value={quantity}
+          />
 
-                <div className="flex items-center gap-3">
-                    <CartItem.Price value={price}/>
-                    <Trash2Icon onClick={removeItem} className="text-gray-400 cursor-pointer hover:text-gray-600" size={16}/>
-                </div>
+          <div className="flex items-center gap-3">
+            <CartItem.Price value={price} />
+            <Trash2Icon
+              onClick={removeItem}
+              className="text-gray-400 cursor-pointer hover:text-gray-600"
+              size={16}
+            />
+          </div>
         </div>
       </div>
     </div>

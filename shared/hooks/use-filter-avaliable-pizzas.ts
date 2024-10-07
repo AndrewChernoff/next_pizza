@@ -22,7 +22,9 @@ export const useFilterAvaliablePizzas = (items: ProductItem[]) => {
       value: el.value,
       disabled: !avaliablePizzas.some((item) => item.size === +el.value),
     }));
-  
+    
+    const currentItemId = items.find(el => el.pizzaType === type && el.size === size)?.id 
+
     useEffect(() => {
       const isDisabledSize = avaliablePizzas[0].size === size;
   
@@ -33,5 +35,8 @@ export const useFilterAvaliablePizzas = (items: ProductItem[]) => {
       }
     }, [type]);
 
-    return {avaliableSizes, setType, setSize, size, type}
+    return {avaliableSizes, setType, setSize, size, type, currentItemId}
 }
+
+
+
