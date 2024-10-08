@@ -11,7 +11,8 @@ type PropsType = {
   onClickAdd?: (id: number) => void;
   productId: number;
   className?: string;
-  totalPrice: number
+  totalPrice: number;
+  loading: boolean;
   //id: number
 };
 
@@ -24,6 +25,7 @@ export const ChooseProductForm = ({
   totalPrice,
   onClickAdd,
   className,
+  loading
 }: PropsType) => {
   
   return (
@@ -39,7 +41,7 @@ export const ChooseProductForm = ({
       <div className="w-[490px] bg-[#f7f6f5] p-7">
         <Title text={name} size="md" className="font-extrabold mb-1" />
        
-        <Button className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10" onClick={() => onClickAdd?.(productId)}>
+        <Button loading={loading} className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10" onClick={() => onClickAdd?.(productId)}>
           Добавить в корзину за {totalPrice} ₽
         </Button>
       </div>

@@ -11,6 +11,7 @@ import { cn } from "@/shared/lib/utils";
 import { useStore } from "zustand";
 import { useCartStore } from "@/shared/store/cart";
 import { CreateCartItemValues } from "@/shared/services/dto/cart.dto";
+import toast from "react-hot-toast";
 
 type PropsType = {
   id: string;
@@ -20,9 +21,9 @@ type PropsType = {
 
 export const ChooseProductModal = ({ id, onClose, className }: PropsType) => {
   //need to remake it so component gets product
+  //need to refactor on adding pizza and product in one function
 
-  const addCartItem = useCartStore((state) => state.addCartItem)
-
+  const [addCartItem, loading] = useCartStore((state) => [state.addCartItem, state.loading]);
 
   const [product, setProduct] = useState<ProductWithRelations | null>(null);
 
@@ -34,12 +35,29 @@ export const ChooseProductModal = ({ id, onClose, className }: PropsType) => {
       .then((res) => setProduct(res))
       .catch((err) => console.log(err));
   }, [id]);
-//const productId = (product as any ).items[0].id
+  //const productId = (product as any ).items[0].id
 
-  const addCartPizzaItemHandler = (data: CreateCartItemValues)=> addCartItem(data)
-console.log(product);
+  const addCartPizzaItemHandler = async (data: CreateCartItemValues) => {
+    try {
+      await addCartItem(data);
+      toast.success('Пицца добавлена в корзину')
+    } catch (error) {
+      toast.error("Не удалось добавить пиццу в корзину");
+      console.error(error);
+    }
+  };
+    
 
-const addProductItemHandler = (productItemId: number)=> addCartItem({productItemId})
+  const addProductItemHandler = async (productItemId: number) => {
+    try {
+      await addCartItem({ productItemId });
+      toast.success('Продукт добавлен в корзину')
+    } catch (error) {
+      toast.error("Не удалось добавить продукт в корзину");
+      console.error(error);
+    }
+   }
+    
 
   return (
     <Dialog open={Boolean(id)} onOpenChange={onClose}>
@@ -49,16 +67,25 @@ const addProductItemHandler = (productItemId: number)=> addCartItem({productItem
           className
         )}
       >
-        {isPizzaForm && product ? (                                                 ///
-          <ChoosePPizzaForm items={product.items} imageUrl={product.imageUrl} productId={(product as any ).items[0].id} name={product.name} ingredients={product?.ingredients} onAddToCart={addCartPizzaItemHandler}/>
+        {isPizzaForm && product ? ( ///
+          <ChoosePPizzaForm
+            items={product.items}
+            imageUrl={product.imageUrl}
+            productId={(product as any).items[0].id}
+            name={product.name}
+            ingredients={product?.ingredients}
+            onAddToCart={addCartPizzaItemHandler}
+            loading={loading}
+          />
         ) : (
           product && (
             <ChooseProductForm
               imageUrl={product?.imageUrl}
               name={product?.name}
-              productId={(product as any ).items[0].id}
+              productId={(product as any).items[0].id}
               onClickAdd={addProductItemHandler}
               totalPrice={product.items[0].price}
+              loading={loading}
             />
           )
         )}

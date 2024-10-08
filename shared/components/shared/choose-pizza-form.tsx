@@ -27,7 +27,8 @@ type PropsType = {
   onClickAdd?: () => void;
   onAddToCart: (values: CreateCartItemValues) => void; ///
   className?: string;
-  productId: number
+  productId: number;
+  loading: boolean;
 };
 
 export const ChoosePPizzaForm = ({
@@ -37,6 +38,7 @@ export const ChoosePPizzaForm = ({
   ingredients,
   className,
   onAddToCart,
+  loading,
   productId
 }: PropsType) => {
   
@@ -99,6 +101,7 @@ export const ChoosePPizzaForm = ({
           </div>
         </div>
         <Button
+          loading={loading}
           className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10"
           onClick={handleClickAdd}
         >
