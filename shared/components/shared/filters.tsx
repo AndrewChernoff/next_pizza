@@ -3,10 +3,7 @@ import { useIngredients } from "@/shared/hooks/use-filter-ingredients";
 import { Input, RangeSlider } from "../ui";
 import { CheckboxFiltersGroup } from "./checkbox-filters-group";
 import { Title } from "./title";
-import { useEffect, useState } from "react";
-import { useSet } from "react-use";
-import qs from "qs";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useQueryParamsFilters } from "@/shared/hooks/use-query-params-filters";
 import { useFilters } from "@/shared/hooks/use-filters";
 
@@ -20,52 +17,19 @@ interface PriceProps {
 }
 
 export const Filters = ({ className }: PropsType) => {
-  
- /*  const router = useRouter()
+  const searchParams = useSearchParams();
 
-  const searchParams = useSearchParams() */
-
-  const searchParams = useSearchParams()
-  
   const { ingredients, loading, selectedIngredientsIds, onAddId } =
-    useIngredients(searchParams.get('ingredients') ? searchParams.get('ingredients')?.split(',') : []);
+    useIngredients(
+      searchParams.get("ingredients")
+        ? searchParams.get("ingredients")?.split(",")
+        : []
+    );
 
+  const { sizes, pizzaTypes, toggleSizes, toggleTypes, price, setPrice } =
+    useFilters();
 
-  /* const [sizes, { toggle: toggleSizes }] = useSet(searchParams.get('sizes')  ? new Set(searchParams.get('sizes')?.split(',')) : new Set([]));  //searchParams.get('sizes')?.split(',')
-  
-  const [pizzaTypes, { toggle: toggleTypes }] = useSet(searchParams.get('pizzaTypes')  ? new Set(searchParams.get('pizzaTypes')?.split(',')) : new Set([]));
-
-  
-  const [price, setPrice] = useState<PriceProps>({
-    priceFrom: Number(searchParams.get('priceFrom')) || 0,
-    priceTo: Number(searchParams.get('priceTo')) || 1000,
-  }); */
-
-  const {sizes, pizzaTypes, toggleSizes, toggleTypes, price, setPrice} = useFilters()
-
-   useQueryParamsFilters({price, pizzaTypes, sizes, selectedIngredientsIds})
-
-
-  /* useEffect(() => {
-
-    const filters = {
-      ...price,
-      pizzaTypes: Array.from(pizzaTypes),
-      sizes: Array.from(sizes),
-      ingredients: Array.from(selectedIngredientsIds)
-    }
-
-
-    const query = qs.stringify(filters, {
-      arrayFormat: 'comma',
-    });
-
-    router.push(`?${query}`, {
-      scroll: false
-    });
-
-  }, [pizzaTypes, price, router, selectedIngredientsIds, sizes]) */
-  
+  useQueryParamsFilters({ price, pizzaTypes, sizes, selectedIngredientsIds });
 
   const items = ingredients.map((item) => ({
     value: String(item.id),
@@ -80,10 +44,6 @@ export const Filters = ({ className }: PropsType) => {
     <div className={className}>
       <Title text="Фильтрация" size="sm" className="mb-5 font-bold" />
       {/*Upper checkboxes */}
-      {/* <div className="flex flex-col gap-4">
-        <FilterCheckbox text="Можно собирать" value="1" />
-        <FilterCheckbox text="Новинки" value="2" />
-      </div> */}
 
       <CheckboxFiltersGroup
         name="type"
@@ -92,8 +52,8 @@ export const Filters = ({ className }: PropsType) => {
         onAddId={toggleTypes}
         selected={pizzaTypes}
         items={[
-          {text: 'Тонокое', value: '1'},
-          {text: 'Традиционное', value: '2'}
+          { text: "Тонокое", value: "1" },
+          { text: "Традиционное", value: "2" },
         ]}
       />
 
@@ -104,9 +64,9 @@ export const Filters = ({ className }: PropsType) => {
         onAddId={toggleSizes}
         selected={sizes}
         items={[
-          {text: '20 см', value: '20'},
-          {text: '30 см', value: '30'},
-          {text: '40 см', value: '40'},
+          { text: "20 см", value: "20" },
+          { text: "30 см", value: "30" },
+          { text: "40 см", value: "40" },
         ]}
       />
 

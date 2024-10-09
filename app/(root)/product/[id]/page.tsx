@@ -26,7 +26,6 @@ export default async function Page({
           <p className="text-gray-400">Lorem ipsum dolor sit amet, consectetur</p>
         
         <GroupVariants
-        selectedValue="2"
         items={[
           {
             name: 'small',
