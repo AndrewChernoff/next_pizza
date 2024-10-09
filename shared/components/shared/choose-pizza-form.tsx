@@ -1,3 +1,5 @@
+'use client'
+
 import { Ingredient, ProductItem } from "@prisma/client";
 import { Title } from "./title";
 import { Button } from "../ui";

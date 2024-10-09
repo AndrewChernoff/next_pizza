@@ -8,10 +8,10 @@ import { ChooseProductForm } from "../choose-product-form";
 import { ProductWithRelations } from "@/@types/prisma";
 import { ChoosePPizzaForm } from "../choose-pizza-form";
 import { cn } from "@/shared/lib/utils";
-import { useStore } from "zustand";
 import { useCartStore } from "@/shared/store/cart";
 import { CreateCartItemValues } from "@/shared/services/dto/cart.dto";
 import toast from "react-hot-toast";
+import { ProductPageForm } from "../product-page-form";
 
 type PropsType = {
   id: string;
@@ -37,7 +37,7 @@ export const ChooseProductModal = ({ id, onClose, className }: PropsType) => {
   }, [id]);
   //const productId = (product as any ).items[0].id
 
-  const addCartPizzaItemHandler = async (data: CreateCartItemValues) => {
+/*   const addCartPizzaItemHandler = async (data: CreateCartItemValues) => {
     try {
       await addCartItem(data);
       toast.success('Пицца добавлена в корзину')
@@ -56,7 +56,7 @@ export const ChooseProductModal = ({ id, onClose, className }: PropsType) => {
       toast.error("Не удалось добавить продукт в корзину");
       console.error(error);
     }
-   }
+   } */
     
 
   return (
@@ -67,7 +67,7 @@ export const ChooseProductModal = ({ id, onClose, className }: PropsType) => {
           className
         )}
       >
-        {isPizzaForm && product ? ( ///
+        {/* {isPizzaForm && product ? ( ///
           <ChoosePPizzaForm
             items={product.items}
             imageUrl={product.imageUrl}
@@ -88,7 +88,8 @@ export const ChooseProductModal = ({ id, onClose, className }: PropsType) => {
               loading={loading}
             />
           )
-        )}
+        )} */}
+        {product && <ProductPageForm product={product}/>}
       </DialogContent>
     </Dialog>
   );
