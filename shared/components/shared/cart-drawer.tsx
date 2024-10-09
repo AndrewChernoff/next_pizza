@@ -43,10 +43,7 @@ export const CartDrawer = ({
   }
   const removeCartItemHandler = (id: number) => {
     removeCartItem(id)
-  }
-
-  console.log(items);
-  
+  }  
   
   return (
     <Sheet>

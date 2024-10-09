@@ -34,7 +34,6 @@ export const CartDrawerItem = ({
     }
   };
 
-  console.log(details);
   
   return (
     <div className={cn("flex bg-white p-5 gap-6", className)}>

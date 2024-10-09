@@ -8,11 +8,9 @@ import {
   mapPizzaSize,
   mapPizzaType,
   PizzaSize,
-  pizzaSizes,
   PizzaType,
   pizzaTypes,
 } from "@/shared/constants/pizza";
-import { useEffect, useState } from "react";
 import { IngredientItem } from "./ingredient";
 import { useSet } from "react-use";
 import { useTotalPizzaPrice } from "@/shared/hooks/use-total-pizza-price";

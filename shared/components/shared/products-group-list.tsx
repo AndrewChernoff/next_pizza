@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { useIntersection } from 'react-use';
 import { useCategoryStore } from '@/shared/store/category'
 import { ChooseProductModal } from "./modals";
+import { Ingredient, Product } from "@prisma/client";
 
 
 type PropsType = {
@@ -36,16 +37,15 @@ export const ProductsGroupList = ({
 
     useEffect(() => {
       if(intersection?.isIntersecting) {
-        console.log(categoryId);
         
         setCategoryId(categoryId)/// have to get an id
       }
     }, [categoryId, intersection?.isIntersecting, title])
     
 
-  const selectProduct = (id: string) => {//m
+  const selectProduct = (id: string) => {
     setProductId(id)
-  }
+  }  
 
   return (
     <>
@@ -63,6 +63,7 @@ export const ProductsGroupList = ({
             name={product.name}
             imageUrl={product.imageUrl}
             price={product.items[0].price}
+            ingredients={product.ingredients}
           />
         ))}
       </div>

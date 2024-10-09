@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Title } from "./title";
 import { Button } from "../ui";
 import { Plus } from "lucide-react";
+import { Ingredient } from "@prisma/client";
 
 type PropsType = {
   id: number;
@@ -9,7 +10,8 @@ type PropsType = {
   price: number;
   imageUrl: string;
   className?: string;
-  callBack: () => void //m
+  callBack: () => void;
+  ingredients?: Ingredient[]
 };
 
 export const ProductsCard = ({
@@ -18,8 +20,11 @@ export const ProductsCard = ({
   imageUrl,
   name,
   price,
-  callBack
+  callBack,
+  ingredients
 }: PropsType) => {
+  
+  const pizzaIngredients = ingredients?.map(el => el.name).join(', ')
   
   return (
     <div className={className} onClick={callBack}>
@@ -31,7 +36,8 @@ export const ProductsCard = ({
         <Title text={name} size="sm" className="mb-1 mt-3 font-bold" />
 
         <p className="text-sm text-gray-400">
-          Цыпленок, моцарелла, сыры чеддер и пармезан, сырный соус, томаты
+          {pizzaIngredients} {/* if it's pizza */}
+          {/* Цыпленок, моцарелла, сыры чеддер и пармезан, сырный соус, томаты */}
         </p>
 
         <div className="flex justify-between items-center mt-4">
