@@ -1,3 +1,4 @@
+import { CheckoutItemDetails } from './checkout-item-detailes';
 export { SearchInput } from './search-input';
 export { ProductsGroupList } from './products-group-list';
 export { ProductsCard } from './products-card';
@@ -11,4 +12,6 @@ export { Title } from './title';
 export { Container } from './container';
 export { Header } from './header';
 export { CartDrawer } from './cart-drawer';
+export { WhiteBlock } from './white-block';
+export { CheckoutItemDetails } from './checkout-item-detailes';
 export * from './modals';

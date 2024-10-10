@@ -9,9 +9,11 @@ import { CartButton } from "./cart-button";
 
 type PropsType = {
   className?: string;
+  hasSearch?: boolean;
+  hasCart?: boolean;
 };
 
-export const Header = ({ className }: PropsType) => {
+export const Header = ({ className, hasSearch = true, hasCart = true }: PropsType) => {
   return (
     <header className={cn("border border-b", className)}>
       <Container className="flex itmes-center justify-between py-8">
@@ -27,9 +29,9 @@ export const Header = ({ className }: PropsType) => {
             </div>
           </Link>
 
-        <div className="mx-10 flex-1">
+        {hasSearch && <div className="mx-10 flex-1">
           <SearchInput />
-        </div>
+        </div>}
 
         <div className="flex items-center gap-3">
           <Button variant={"outline"} className="flex items-center gap-1">
@@ -37,7 +39,7 @@ export const Header = ({ className }: PropsType) => {
             Войти
           </Button>
 
-          <CartButton />
+          {hasCart && <CartButton />}
           </div>
       </Container>
     </header>
