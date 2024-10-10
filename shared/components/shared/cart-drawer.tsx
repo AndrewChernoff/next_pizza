@@ -68,6 +68,7 @@ export const CartDrawer = ({
                   item.pizzaSize as PizzaSize,
                   item.ingredients as any
                 ): ''}
+                disabled={item.disabled}
                 name={item.name}
                 price={item.price}
                 quantity={item.quantity}

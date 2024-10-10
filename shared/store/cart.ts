@@ -25,7 +25,78 @@ export interface CartState {
     removeCartItem: (id: number) => Promise<void>;
 }
 
-export const useCartStore = create<CartState>((set, get) => ({
+
+export const useCartStore = create<CartState>()(
+  devtools(
+    persist(
+      (set) => ({
+        items: [],
+        error: false,
+        loading: true,
+        totalAmount: 0,
+
+        fetchCartItems: async () => {
+          try {
+            set({ loading: true, error: false });
+            const data = await Api.cart.fetchCart();
+            set(getCartDetails(data));
+          } catch (error) {
+            console.error(error);
+            set({ error: true });
+          } finally {
+            set({ loading: false });
+          }
+        },
+
+        updateItemQuantity: async (id: number, quantity: number) => {
+          try {
+            set({ loading: true, error: false });
+            const data = await Api.cart.updateCart(id, quantity);
+            set(getCartDetails(data));
+          } catch (error) {
+            console.error(error);
+            set({ error: true });
+          }
+        },
+
+        removeCartItem: async (id: number) => {
+          try {
+            //set({ loading: true, error: false });
+            set((state) => ({
+              loading: true,
+              items: state.items.map(el => el.id === id ? {...el, disabled: true}: el),
+              error: false
+            }))
+            const data = await Api.cart.deleteCartItem(id);
+            
+            set(getCartDetails(data));
+            
+          } catch (error) {
+            console.error(error);
+            set({ error: true });
+          } finally {
+            set({ loading: false });
+          }
+        },
+
+        addCartItem: async (values: CreateCartItemValues) => {
+          try {
+            set({ loading: true, error: false });
+            const data = await Api.cart.addCartItem(values);
+            set(getCartDetails(data));
+          } catch (error) {
+            console.error(error);
+            set({ error: true });
+          } finally {
+            set({ loading: false });
+          }
+        },
+      }),
+      { name: 'cart' }
+    ),
+  )
+);
+/* export const useCartStore = create<CartState>((set, get) => ({
     items: [],
     error: false,
     loading: true,
@@ -78,3 +149,4 @@ export const useCartStore = create<CartState>((set, get) => ({
       }
     },
   }));
+ */
