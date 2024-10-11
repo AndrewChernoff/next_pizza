@@ -15,4 +15,7 @@ export { Header } from './header';
 export { CartDrawer } from './cart-drawer';
 export { WhiteBlock } from './white-block';
 export { CheckoutItemDetails } from './checkout-item-detailes';
+export { RequiredSymbol } from './required-symbol';
+export { ErrorText } from './error-text';
+export { ClearButton } from './clear-button';
 export * from './modals';
