@@ -14,7 +14,6 @@ export const getCartItemDetailes = (
         const typeName = mapPizzaType[pizzaType]
         detailes.push(`${typeName} см`)
     }
-    console.log(ingredients);
 
     if(ingredients) {
         detailes.push(...ingredients.map(el => el.name))

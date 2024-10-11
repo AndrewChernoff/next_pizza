@@ -14,11 +14,11 @@ import {
 import { Button } from "../ui";
 import { CartDrawerItem } from "./cart-drawer-item";
 import { getCartItemDetailes } from "@/shared/lib";
-import { useCartStore } from "@/shared/store/cart";
 import { PizzaSize, PizzaType } from "@/shared/constants/pizza";
 import { CartStateItem } from "@/shared/lib/get-cart-details";
 import Image from "next/image";
 import { Title } from ".";
+import { useCart } from "@/shared/hooks/use-cart";
 
 type PropsType = {
   className?: string;
@@ -28,7 +28,7 @@ export const CartDrawer = ({
   children,
   className,
 }: PropsWithChildren<PropsType>) => {
-  const [
+ /*  const [
     fetchCartItems,
     updateItemQuantity,
     removeCartItem,
@@ -51,7 +51,9 @@ export const CartDrawer = ({
   };
   const removeCartItemHandler = (id: number) => {
     removeCartItem(id);
-  };
+  }; */
+
+  const {items, changeQuantity, removeCartItemHandler, totalAmount } = useCart()
 
   return (
     <Sheet>

@@ -1,4 +1,5 @@
-import { CheckoutItemDetails } from './checkout-item-detailes';
+export { OrderSidebar } from './order-sidebar';
+export { OrderItem } from './order-item';
 export { SearchInput } from './search-input';
 export { ProductsGroupList } from './products-group-list';
 export { ProductsCard } from './products-card';
