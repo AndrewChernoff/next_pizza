@@ -1,16 +1,10 @@
 "use client";
 
-import { Container, OrderSidebar, Title } from "@/shared/components/shared";
+import { Container, OrderAddressForm, OrderCart, OrderPersonalForm, OrderSidebar, Title } from "@/shared/components/shared";
 import { useCart } from "@/shared/hooks/use-cart";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { OrderCart } from "@/shared/components/shared/order-page/order-cart";
-import { OrderPersonalForm } from "@/shared/components/shared/order-page/order-personal-form";
-import { OrderAddressForm } from "@/shared/components/shared/order-page/order-address-form";
-import {
-  checkoutFormSchema,
-  CheckoutFormValues,
-} from "@/shared/components/shared/order-page/schemas/checkout-form-schema";
+import { checkoutFormSchema, CheckoutFormValues } from "@/shared/components/shared/order-page/schemas/checkout-form-schema";
 import { DevTool } from "@hookform/devtools";
 
 

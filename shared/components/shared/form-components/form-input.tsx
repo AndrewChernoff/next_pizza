@@ -29,7 +29,7 @@ export const FormInput = ({name, label, required, className, ...props}: Props) =
 
       const onClearClick = (e: any) => {
         e.preventDefault()
-        setValue(name, '')
+        setValue(name, '', {shouldValidate: true})
     }
 
   return (
@@ -50,3 +50,4 @@ export const FormInput = ({name, label, required, className, ...props}: Props) =
     </div>
   )
 }
+//17 07
