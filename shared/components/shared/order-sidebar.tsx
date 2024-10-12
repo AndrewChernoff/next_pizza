@@ -1,17 +1,19 @@
 import { ArrowRight, Package, Percent, Truck } from "lucide-react"
 import { CheckoutItemDetails } from "."
 import { WhiteBlock } from "./white-block"
-import { Button } from "../ui"
+import { Button, Skeleton } from "../ui"
+import { cn } from "@/shared/lib/utils"
 
-type PropsType = {totalPrice: number, deliveryPrice: number, taxPrice: number }
+type PropsType = {totalPrice: number, deliveryPrice: number, taxPrice: number, loading: boolean }
 
-export const OrderSidebar = ({totalPrice, deliveryPrice, taxPrice }: PropsType) => {
+export const OrderSidebar = ({totalPrice, deliveryPrice, taxPrice, loading }: PropsType) => {
   return (
-    <div className="w-[450px]">
+    <div className={cn("w-[450px]", {"opacity-50 pointer-events-none	": loading})}>
           <WhiteBlock className="p-6 sticky top-4">
             <div className="flex flex-col gap-1">
               <span className="text-xl">Итого:</span>
-              <span className="text-[34px] font-extrabold">{totalPrice} ₽</span>
+              {loading ? <Skeleton className="w-40 h-10"/> : <span className="text-[34px] font-extrabold">{totalPrice} ₽</span> }
+              
             </div>
 
             <CheckoutItemDetails
@@ -21,7 +23,7 @@ export const OrderSidebar = ({totalPrice, deliveryPrice, taxPrice }: PropsType) 
                   Стоимость товаров:
                 </div>
               }
-              value={`${totalPrice} ₽`}
+              value={loading ? <Skeleton className="w-20 h-7"/> : `${totalPrice} ₽`}
             />
             <CheckoutItemDetails
               title={
@@ -30,7 +32,7 @@ export const OrderSidebar = ({totalPrice, deliveryPrice, taxPrice }: PropsType) 
                   Налоги:
                 </div>
               }
-              value={`${taxPrice} ₽`}
+              value={loading ? <Skeleton className="w-20 h-7"/> :`${taxPrice} ₽`}
             />
             <CheckoutItemDetails
               title={
@@ -39,7 +41,7 @@ export const OrderSidebar = ({totalPrice, deliveryPrice, taxPrice }: PropsType) 
                   Доставка:
                 </div>
               }
-              value={`${deliveryPrice} ₽`}
+              value={loading ? <Skeleton className="w-20 h-7"/> :`${deliveryPrice} ₽`}
             />
 
             <Button

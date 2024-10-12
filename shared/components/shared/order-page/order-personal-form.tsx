@@ -2,13 +2,17 @@ import { WhiteBlock } from "../white-block"
 import { Input } from "../../ui"
 import { FormInput } from "../form-components/form-input"
 import { useFormContext } from "react-hook-form"
+import { cn } from "@/shared/lib/utils"
 
+type PropsType = {
+  loading: boolean
+}
 
-export const OrderPersonalForm = () => {
+export const OrderPersonalForm = ({loading}: PropsType) => {
 
 
   return (
-    <WhiteBlock title="2. Персональные данные">
+    <WhiteBlock title="2. Персональные данные" className={cn({"opacity-50 pointer-events-none" : loading})}>
             <div className="grid grid-cols-2 gap-5">
               <FormInput name="firstName" className="text-base" placeholder="Имя" />
               <FormInput

@@ -59,15 +59,16 @@ export default function Order() {
               onClickCountButton={onClickCountButton}
             />
 
-            <OrderPersonalForm />
+            <OrderPersonalForm loading={loading} />
 
-            <OrderAddressForm />
+            <OrderAddressForm loading={loading} />
           </div>
 
           <OrderSidebar
             totalPrice={totalPrice}
             taxPrice={taxPrice}
             deliveryPrice={DELIVERY_PRICE}
+            loading={loading}
           />
         </form>
       </FormProvider>

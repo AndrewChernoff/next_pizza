@@ -1,10 +1,15 @@
+import { cn } from "@/shared/lib/utils";
 import { FormInput, FormTextarea } from "../form-components";
 import { AddressInputForm } from "../form-components/address-input-form";
 import { WhiteBlock } from "../white-block";
 
-export const OrderAddressForm = () => {
+type PropsTRype = {
+  loading: boolean
+}
+
+export const OrderAddressForm = ({loading}: PropsTRype) => {
   return (
-    <WhiteBlock title="3. Адрес доставки">
+    <WhiteBlock title="3. Адрес доставки" className={cn({"opacity-50 pointer-events-none" : loading})}>
       <div className="flex flex-col gap-5">
         {/* <FormInput
           name="address"
