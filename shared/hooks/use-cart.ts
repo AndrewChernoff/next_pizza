@@ -12,6 +12,7 @@ type ReturnProps = {
     removeCartItemHandler: (id: number) => void;
     changeQuantity: (id: number, quantity: number) => void
     totalAmount: number
+    loading: boolean
 };
 
 export const useCart = (): ReturnProps => {
@@ -20,13 +21,15 @@ export const useCart = (): ReturnProps => {
     updateItemQuantity,
     removeCartItem,
     totalAmount,
-    items
+    items,
+    loading
   ] = useCartStore((state) => [
     state.fetchCartItems,
     state.updateItemQuantity,
     state.removeCartItem,
     state.totalAmount,
     state.items,
+    state.loading
   ]);
 
   useEffect(() => {
@@ -41,6 +44,7 @@ export const useCart = (): ReturnProps => {
   };
 
   return {
+    loading,
     fetchCartItems,
     addCartItem,
     updateItemQuantity,

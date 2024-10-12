@@ -26,7 +26,7 @@ export default function Order() {
   const onSubmit: SubmitHandler<CheckoutFormValues> = (data) =>
     console.log(data);
 
-  const { items, changeQuantity, removeCartItemHandler, totalAmount } =
+  const { items, changeQuantity, removeCartItemHandler, totalAmount, loading } =
     useCart();
 
   const onClickCountButton = (
@@ -53,6 +53,7 @@ export default function Order() {
         <form className="flex gap-10"  onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-10 flex-1 mb-20">
             <OrderCart
+              loading={loading}
               items={items}
               removeCartItemHandler={removeCartItemHandler}
               onClickCountButton={onClickCountButton}
