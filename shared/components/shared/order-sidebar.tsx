@@ -4,9 +4,9 @@ import { WhiteBlock } from "./white-block"
 import { Button, Skeleton } from "../ui"
 import { cn } from "@/shared/lib/utils"
 
-type PropsType = {totalPrice: number, deliveryPrice: number, taxPrice: number, loading: boolean }
+type PropsType = {totalPrice: number, deliveryPrice: number, taxPrice: number, loading: boolean, disabled: boolean }
 
-export const OrderSidebar = ({totalPrice, deliveryPrice, taxPrice, loading }: PropsType) => {
+export const OrderSidebar = ({totalPrice, deliveryPrice, taxPrice, loading, disabled }: PropsType) => {
   return (
     <div className={cn("w-[450px]", {"opacity-50 pointer-events-none	": loading})}>
           <WhiteBlock className="p-6 sticky top-4">
@@ -45,6 +45,7 @@ export const OrderSidebar = ({totalPrice, deliveryPrice, taxPrice, loading }: Pr
             />
 
             <Button
+              loading={disabled}
               type="submit"
               className="w-full h-14 rounded-2xl mt-6 text-base font-bold"
             >

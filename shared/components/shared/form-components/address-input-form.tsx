@@ -19,9 +19,7 @@ interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   }
 
 export const AddressInputForm = ({ className, name, label, required} : Props) => {
-  /* const [value, setValue] = useState<
-    DaDataSuggestion<DaDataAddress> | undefined
-  >(); */
+ 
   const {
     control,
     formState: { errors },
@@ -31,6 +29,7 @@ export const AddressInputForm = ({ className, name, label, required} : Props) =>
   const value = watch(name);
   const errorText = errors[name]?.message as string;
 
+ console.log(value);
  
 
   return (
@@ -41,7 +40,7 @@ export const AddressInputForm = ({ className, name, label, required} : Props) =>
         }}
         render={({ field: { onChange } }) => (
             <>
-            <AddressSuggestions token="b9e5e2cd38c08d90222ff9f33af37a6dd5794e9b"  onChange={onChange} />
+            <AddressSuggestions token="b9e5e2cd38c08d90222ff9f33af37a6dd5794e9b"  onChange={(e) => onChange(e?.value)} />
             {errorText && <ErrorText text={errorText}/>}
             </>
         )}

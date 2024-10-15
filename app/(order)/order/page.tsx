@@ -6,12 +6,18 @@ import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { checkoutFormSchema, CheckoutFormValues } from "@/shared/components/shared/order-page/schemas/checkout-form-schema";
 import { DevTool } from "@hookform/devtools";
+import createUser from "@/app/actions";
+import toast from "react-hot-toast";
+import { useState } from "react";
 
 
 const VAT = 15;
 const DELIVERY_PRICE = 250;
 
 export default function Order() {
+
+  const [orderLoading, setOrderLoading] = useState(false)
+
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutFormSchema),
     defaultValues: {
@@ -23,8 +29,27 @@ export default function Order() {
       comment: "",
     },
   });
-  const onSubmit: SubmitHandler<CheckoutFormValues> = (data) =>
-    console.log(data);
+  const onSubmit: SubmitHandler<CheckoutFormValues> = async (data) => {
+    try {
+      setOrderLoading(true)
+      const url = await createUser(data);
+      form.reset()
+      toast.success('Заказ оформлен! Переход на оплату...')
+
+      /* if (url) {
+        window.location.assign(url)
+      } */
+      setOrderLoading(false)
+      
+    } catch(err) {
+      toast.error('Не удалось создать заказ', {
+        icon: ''
+      })
+    } finally {
+      setOrderLoading(false)
+    }
+    
+  }
 
   const { items, changeQuantity, removeCartItemHandler, totalAmount, loading } =
     useCart();
@@ -65,6 +90,7 @@ export default function Order() {
           </div>
 
           <OrderSidebar
+            disabled={orderLoading}
             totalPrice={totalPrice}
             taxPrice={taxPrice}
             deliveryPrice={DELIVERY_PRICE}
