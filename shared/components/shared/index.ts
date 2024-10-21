@@ -1,3 +1,4 @@
+export { ProfileButton } from './profile-button';
 export { OrderSidebar } from './order-sidebar';
 export { OrderItem } from './order-item';
 export { SearchInput } from './search-input';

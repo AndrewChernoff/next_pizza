@@ -3,6 +3,7 @@
 import { prisma } from "@/prisma/prisma-client";
 import { CheckoutFormValues } from "@/shared/components/shared/order-page/schemas/checkout-form-schema";
 import { sendEmail } from "@/shared/lib";
+import { createPayment } from "@/shared/lib/create-payment";
 import { OrderStatus } from "@prisma/client";
 import { cookies } from "next/headers";
 
@@ -74,12 +75,36 @@ export default async function createUser(data: CheckoutFormValues) {
         cartId: userCart.id,
       },
     });
-    console.log(order.email);
+
+    const paymentValues = {
+      order_id: order.id,
+      price: userCart.totalAmount,
+      description: "Оплата заказа #" + order.id,
+    };
+
+    const paymentData = await createPayment(paymentValues);
+
+    if (!paymentData) {
+      throw new Error("Payment data not found");
+    }
+
+    await prisma.order.update({
+      where: {
+        id: order.id,
+      },
+      data: {
+        paymentId: paymentData.id,
+      },
+    });
+    const paymentUrl = paymentData.confirmation.confirmation_url;
+
     await sendEmail(data.email, "Заказ", {
       orderId: order.id,
       totalAmount: userCart.totalAmount,
-      paymentUrl: "https://resend.com/docs/send-with-nextjs",
+      paymentUrl,
     });
+
+    return paymentUrl;
   } catch (error) {
     console.log("[[CreateOrder] Server error", error);
   }

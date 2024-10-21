@@ -67,6 +67,9 @@ export default function Order() {
   const taxPrice = (totalAmount * VAT) / 100;
   const totalPrice = totalAmount + DELIVERY_PRICE + taxPrice;
 
+  console.log(items);
+  
+
   return (
 <>
 <Container className="mt-5">

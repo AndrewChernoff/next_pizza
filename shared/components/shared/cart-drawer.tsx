@@ -26,32 +26,7 @@ type PropsType = {
 
 export const CartDrawer = ({
   children,
-  className,
 }: PropsWithChildren<PropsType>) => {
- /*  const [
-    fetchCartItems,
-    updateItemQuantity,
-    removeCartItem,
-    totalAmount,
-    items,
-  ] = useCartStore((state) => [
-    state.fetchCartItems,
-    state.updateItemQuantity,
-    state.removeCartItem,
-    state.totalAmount,
-    state.items,
-  ]);
-
-  useEffect(() => {
-    fetchCartItems();
-  }, []);
-
-  const changeQuantity = (id: number, quantity: number) => {
-    updateItemQuantity(id, quantity);
-  };
-  const removeCartItemHandler = (id: number) => {
-    removeCartItem(id);
-  }; */
 
   const {items, changeQuantity, removeCartItemHandler, totalAmount } = useCart()
 
@@ -120,7 +95,7 @@ export const CartDrawer = ({
                   <span className="font-bold text-lg">{totalAmount} ₽</span>
                 </div>
 
-                <Link href="/checkout">
+                <Link href='/order'>
                   <Button
                     //onClick={() => setRedirecting(true)}
                     /* loading={redirecting} */
