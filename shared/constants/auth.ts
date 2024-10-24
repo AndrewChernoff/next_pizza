@@ -1,12 +1,4 @@
-
-import { authOptions } from "@/shared/constants/auth"
-import NextAuth from "next-auth"
-
-const handler = NextAuth(authOptions)
-
-export { handler as GET, handler as POST }
-
-/* import NextAuth, { AuthOptions, User } from "next-auth";
+import NextAuth, { AuthOptions, getServerSession, User } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -14,7 +6,7 @@ import { prisma } from "@/prisma/prisma-client";
 import { compare, hashSync } from "bcrypt";
 import { UserRole } from "@prisma/client";
 
-const handler: AuthOptions = NextAuth({
+const authOptions: AuthOptions = {
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_ID!,
@@ -156,7 +148,8 @@ const handler: AuthOptions = NextAuth({
       return session
     },
   },
-});
+};
 
-export { handler as GET, handler as POST };
- */
+const getSession = () => getServerSession(authOptions)
+
+export { authOptions, getSession }
